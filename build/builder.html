@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Builder</title>
+    <script type='text/javascript' src='js/builder.js'></script>
+    <link type='text/css' rel='stylesheet' href='css/builder.css'>
+  </head>
+  <body>
+    <header class='builder'>
+      <h1>Workout Builder</h1>
+    </header>
+    <main class='builder'>
+      <div id='diagram-box' class='box'>
+        <svg id='diagram'></svg>
+      </div>
+      <div id='muscle-group-box' class='box'>
+        <h2 id='muscle-name'></h2>
+        <ul id='exercise-list'></ul>
+      </div>
+      <div id='planner-box' class='box'>
+        <div id='days'>
+          <div id='sunday' class='day'>S</div>
+          <div id='monday' class='day'>M</div>
+          <div id='tuesday' class='day'>T</div>
+          <div id='wednesday' class='day'>W</div>
+          <div id='thursday' class='day'>H</div>
+          <div id='friday' class='day'>F</div>
+          <div id='saturday' class='day'>S</div>
+        </div>
+        <div id='daily-workout'>
+          <h2 id='day'></h2>
+          <ul id='workout-list'></ul>
+        </div>
+      </div>
+    </main>
+    <a href='dashboard.html' class='builder'>
+      <button id='save-new-workout'>Finished</button>
+    </a>
+  </body>
+</html>

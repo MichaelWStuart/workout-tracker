@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "express": "^4.15.2",
+    "gh-pages": "^0.12.0",
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "start": "nodemon server.js",
+    "build": "node build.js"
+  }
+}

@@ -1,0 +1,17 @@
+.builder {
+  width: 100%;
+  border: 1px dotted black;
+  margin: auto;
+  display: block;
+  text-align: center;
+}
+
+.box {
+  border: 1px dotted black;
+  display: inline-block;
+}
+
+.day {
+  border: 1px dotted blue;
+  display: inline-block;
+}
