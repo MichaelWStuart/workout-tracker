@@ -1,0 +1,11 @@
+.landing {
+  width: 600px;
+  border: 1px dotted black;
+  margin: auto;
+  display: block;
+  text-align: center;
+}
+
+main p {
+  text-align: justify;
+}
