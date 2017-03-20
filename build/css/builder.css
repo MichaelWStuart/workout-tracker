@@ -14,4 +14,37 @@
 .day {
   border: 1px dotted blue;
   display: inline-block;
+  cursor: pointer;
+}
+
+#diagram-box {
+  width: 350px;
+  height: 400px;
+}
+
+#muscle-group-box {
+  width: 350px;
+  height: 400px;
+  overflow-y: auto;
+}
+
+
+svg {
+  height: 350px;
+  z-index: 100;
+}
+
+svg g[id] path {
+  opacity: .2;
+  transition: opacity .25s ease-in-out;
+}
+
+svg g g[id]:hover path {
+  cursor: pointer;
+  opacity: .5;
+  fill: #00BCD4 !important;
+}
+
+.active-day {
+  color: green;
 }
