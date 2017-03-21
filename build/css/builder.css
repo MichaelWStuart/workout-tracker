@@ -37,16 +37,17 @@ html, body {
 
 #body-box #planner-box #days {
   background-color: #EEE;
-  width: 6.5em;
+  width: 18.5vh;
   margin: auto;
   position: relative;
-  top: 8%;
+  top: 5.5vh;
   z-index: 1;
 }
 
 #body-box #planner-box #days .day {
   display: inline-block;
   cursor: pointer;
+  font-size: 3vh;
 }
 
 #body-box #planner-box #daily-workout {
