@@ -7,15 +7,15 @@ window.onload = () => {
 
   const state = {
     exercises: {
-      sunday: [],
-      monday: [],
-      tuesday: [],
-      wednesday: [],
-      thursday: [],
-      friday: [],
-      saturday: []
+      Sunday: [],
+      Monday: [],
+      Tuesday: [],
+      Wednesday: [],
+      Thursday: [],
+      Friday: [],
+      Saturday: []
     },
-    day: 'monday',
+    day: 'Monday',
   };
 
   const elementLookup = key => document.getElementById(key);
@@ -83,7 +83,7 @@ window.onload = () => {
       workoutList.appendChild(node);
     });
     const removeButton = document.getElementById(`${exercise.name}${state.exercises[state.day].length}`)
-    removeButton.addEventListener('click', (e) => {
+    removeButton.addEventListener('click', e => {
       removeExercise(e);
     });
   }
