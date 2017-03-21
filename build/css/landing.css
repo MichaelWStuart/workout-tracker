@@ -42,8 +42,7 @@ html, body {
 
 #body-box #finish {
   margin-top: 1em;
-  border-radius: 3px;
-  background-color: #CCC;
+  background-color: #DDD;
   color: #444;
   font-family: 'Jura', sans-serif;
   position: relative;
