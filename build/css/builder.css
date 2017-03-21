@@ -1,37 +1,154 @@
-.builder {
-  width: 100%;
-  border: 1px dotted black;
-  margin: auto;
-  display: block;
+html, body {
+  height: 100%;
+  margin: 0;
   text-align: center;
+  font-family: 'Jura', sans-serif;
 }
 
-.box {
-  border: 1px dotted black;
+#head-box {
+  width: 100%;
+  height: 15%;
+  background-color: #EEE;
+}
+
+#head-box #page-title {
+  color: #444;
+  font-size: 4vw;
+  height: 10%;
+  text-align: center;
+  margin: auto;
+  line-height: 1.7em;
+}
+
+#body-box {
+  width: 100%;
+  height: 70%;
+  background-color: #EEE;
+}
+
+#body-box #planner-box {
+  margin-left: 2%;
+  width: 31%;
+  height: 100%;
   display: inline-block;
+  background-color: #EEE;
+  float: left;
 }
 
-.day {
-  border: 1px dotted blue;
+#body-box #planner-box #days {
+  background-color: #EEE;
+  width: 6.5em;
+  margin: auto;
+  position: relative;
+  top: 8%;
+  z-index: 1;
+}
+
+#body-box #planner-box #days .day {
   display: inline-block;
   cursor: pointer;
 }
 
-#diagram-box {
-  width: 350px;
-  height: 400px;
-}
-
-#muscle-group-box {
-  width: 350px;
-  height: 400px;
+#body-box #planner-box #daily-workout {
   overflow-y: auto;
+  width: 85%;
+  height: 80%;
+  background-color: #EEE;
+  border: 1px solid black;
+  position: relative;
+  top: 5.5%;
+  left: 7.5%;
+  padding-bottom: 1px;
 }
 
+#body-box #planner-box #daily-workout #workout-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
 
-svg {
-  height: 350px;
-  z-index: 100;
+#body-box #planner-box #daily-workout #workout-list li {
+  box-shadow: 1px 1px 1px 1px rgba(110, 110, 110, 0.4);
+  background-color: #E7E7E7;
+  width: 90%;
+  margin: auto;
+}
+
+#body-box #planner-box #daily-workout #workout-list li h3 {
+  margin: .5em 0;
+  color: #333;
+}
+
+#body-box #planner-box #daily-workout #workout-list li button {
+  margin-bottom: .5em;
+}
+
+#body-box #diagram-box {
+  width: 31%;
+  height: 100%;
+  display: inline-block;
+  padding: 1px;
+}
+
+#body-box #muscle-group-box {
+  width: 27%;
+  height: 90%;
+  display: inline-block;
+  float: right;
+  padding-top: 2vw;
+  padding-right: 3vw;
+}
+
+#body-box #muscle-group-box #muscle-name {
+  color: #333;
+  font-size: 2.5vw;
+  text-align: center;
+  height: 14%;
+  margin: 0 auto;
+  text-decoration: underline;
+}
+
+#body-box #muscle-group-box #exercise-list {
+  overflow-y: auto;
+  list-style: none;
+  width: 95%;
+  height: 76%;
+  padding: 0 0 0 2vw;;
+  margin: 0;
+}
+
+#body-box #muscle-group-box #exercise-list li {
+  margin-right: .4em;
+  background-color: #E7E7E7;
+  box-shadow: 1px 1px 1px 1px rgba(110, 110, 110, 0.4);
+}
+
+#body-box #muscle-group-box #exercise-list li h3 {
+  color: #333;
+  font-size: 1.9vw;
+  margin: .4em auto;
+}
+
+#body-box #muscle-group-box #exercise-list li p {
+  color: #333;
+  font-size: 1.5vw;
+  margin: .4em;
+  text-align: justify;
+}
+
+#body-box #muscle-group-box #exercise-list li button {
+  margin-bottom: .4em;
+}
+
+#foot-box {
+  width: 100%;
+  height: 15%;
+  line-height: 5em;
+  background-color: #EEE;
+}
+
+#foot-box #finish {
+  margin-top: 15px;
 }
 
 svg g[id] path {
@@ -46,5 +163,11 @@ svg g g[id]:hover path {
 }
 
 .active-day {
-  color: green;
+  color: #00BCD4
+}
+
+button {
+  background-color: #DDD;
+  color: #444;
+  font-family: 'Jura', sans-serif;
 }

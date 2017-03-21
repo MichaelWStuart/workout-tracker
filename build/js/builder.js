@@ -76,16 +76,20 @@ window.onload = () => {
   }
 
   const addExercise = exercise => {
-    state.exercises[state.day].push(exercise);
-    const node = document.createElement('li');
-    node.innerHTML = workoutListItemTemplate(exercise);
-    state.exercises[state.day].forEach(() => {
-      workoutList.appendChild(node);
-    });
-    const removeButton = document.getElementById(`${exercise.name}${state.exercises[state.day].length}`)
-    removeButton.addEventListener('click', e => {
-      removeExercise(e);
-    });
+    if(state.exercises[state.day].length > 9) {
+      alert('You have added the maximum number of exercises for that day');
+    } else {
+      state.exercises[state.day].push(exercise);
+      const node = document.createElement('li');
+      node.innerHTML = workoutListItemTemplate(exercise);
+      state.exercises[state.day].forEach(() => {
+        workoutList.appendChild(node);
+      });
+      const removeButton = document.getElementById(`${exercise.name}${state.exercises[state.day].length}`)
+      removeButton.addEventListener('click', e => {
+        removeExercise(e);
+      });
+    }
   }
 
   const setAddButtonEvents = muscle => {
@@ -116,6 +120,16 @@ window.onload = () => {
     repopulateWorkoutListByDay();
   }
 
+  const isValid = () => {
+    let valid;
+    for(let key in state.exercises) {
+      if(state.exercises[key].length > 0) {
+        valid = true;
+      }
+    }
+    return valid;
+  }
+
   document.querySelectorAll('.day').forEach(day => {
     day.addEventListener('click', target => {
       handleDayClick(target.path[0].id);
@@ -129,8 +143,12 @@ window.onload = () => {
   });
 
   finishButton.addEventListener('click', () => {
-    window.localStorage.setItem('_workout_plan', JSON.stringify(state.exercises));
-    window.location.replace('landing.html');
+    if(isValid()) {
+      window.localStorage.setItem('_workout_plan', JSON.stringify(state.exercises));
+      window.location.replace('dashboard.html');
+    } else {
+      alert('You haven\'t selected any exercises');
+    }
   });
 
 }

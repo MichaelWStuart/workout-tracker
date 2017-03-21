@@ -1,12 +1,30 @@
 window.onload = () => {
 
-  const priorWorkouts = JSON.parse(window.localStorage.getItem('_workout_log'))
+  if(!window.localStorage.getItem('_workout_plan')) {
+    window.location.replace('dashboard.html')
+  }
+
+  let priorWorkouts;
+
+  if(!window.localStorage.getItem('_workout_log')) {
+    priorWorkouts = false;
+  } else {
+    priorWorkouts = JSON.parse(window.localStorage.getItem('_workout_log'));
+  }
+
   const workoutPlan = JSON.parse(window.localStorage.getItem('_workout_plan'));
   const currentDate = new Date;
+
   const timestamp = Date.parse(currentDate);
   const exerciseKeys = [];
   const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  (() => {
+    if(workoutPlan[days[currentDate.getDay()]].length === 0) {
+      window.location.replace('dashboard.html');
+    }
+  })()
 
   const tableBody = document.getElementById('table-body');
   const topRow = document.getElementById('top-row')
@@ -17,7 +35,7 @@ window.onload = () => {
 
   const setState = exercise => {
     state[timestamp].exercises.push({[exercise.name]: []})
-    exerciseKeys.push(exercise.name)
+    exerciseKeys.push(exercise.name);
   }
 
   const formatDate = (date) => {
@@ -72,11 +90,11 @@ window.onload = () => {
       target.appendChild(node)
       exercise[exerciseKeys[i]].forEach((set, j) => {
         const targetNode = document.getElementById(`${timestampKeys[index]}-${exerciseKeys[i]}`);
-        if(j !== 0) {
-          const slash = document.createTextNode('/');
+        if(j) {
+          const slash = document.createTextNode(' / ');
           targetNode.appendChild(slash);
         }
-        if(set === '') {
+        if(!set) {
           set = 0;
         }
         const setNode = document.createTextNode(set);
@@ -105,7 +123,9 @@ window.onload = () => {
 
   (() => {
     let node;
-    appendPriorWorkouts();
+    if(priorWorkouts) {
+      appendPriorWorkouts();
+    }
     node = document.createElement('tr');
     node.id = 'inputs-row';
     tableBody.appendChild(node);
@@ -122,7 +142,7 @@ window.onload = () => {
     appendInputs(index);
   });
 
-  document.getElementById('log-title').innerHTML = `Your Workout Plan For ${days[currentDate.getDay()]}`;
+  document.getElementById('page-title').innerHTML = `Workout Plan For ${days[currentDate.getDay()]}`;
 
   const storeInputData = () => {
     document.querySelectorAll('.reps').forEach(item => {
@@ -132,10 +152,18 @@ window.onload = () => {
     });
   }
 
+  document.getElementById('rep-0-0').setAttribute('autofocus','true');
+
   document.getElementById('finish').addEventListener('click', () => {
     storeInputData();
-    priorWorkouts.push(state);
+    if(priorWorkouts) {
+      priorWorkouts.push(state);
+    } else {
+      priorWorkouts = [];
+      priorWorkouts.push(state);
+    }
     window.localStorage.setItem('_workout_log', JSON.stringify(priorWorkouts));
+    window.location.replace('dashboard.html');
   });
 
 }
