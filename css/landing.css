@@ -1,11 +1,51 @@
-.landing {
-  width: 600px;
-  border: 1px dotted black;
-  margin: auto;
-  display: block;
+html, body {
+  height: 100%;
+  margin: 0 auto;
   text-align: center;
+  font-family: 'Jura', sans-serif;
+  color: #444;
+  background-color: #EEE;
 }
 
-main p {
+#landing-box {
+  background: #EEE;
+}
+
+#landing-box #page-title{
+  position: relative;
+  top: 3em;
+  z-index: 1;
+  background-color: #EEE;
+  width: 6.5em;
+  margin: auto;
+}
+
+#body-box {
+  width: 60%;
+  height: 50%;
+  margin: auto;
+  position: relative;
+  top: 5em;;
+  border: 1px solid black;
+  padding: 2em;
+}
+
+#body-box #page-title {
+  position: relative;
+  bottom: 5em;
+}
+
+#body-box #landing-text {
+  margin: 0;
   text-align: justify;
+}
+
+#body-box #finish {
+  margin-top: 1em;
+  border-radius: 3px;
+  background-color: #CCC;
+  color: #444;
+  font-family: 'Jura', sans-serif;
+  position: relative;
+  top: .5em;
 }
