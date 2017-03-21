@@ -6,18 +6,15 @@
     <link type='text/css' rel='stylesheet' href='css/journal.css'>
   </head>
   <body>
-    <header>
-      <h1>Landing Title</h1>
-    </header>
-    <main id='workout-journal'>
-      <div id='literally-just-date'>
-        <h2>Date</h2>
-      </div>
-      <div id='exercise-titles'></div>
-      <ul id='prior-workouts'></ul>
-    </main>
-    <a href='dashboard.html'>
-      <button id='update-journal'>Finished</button>
-    </a>
+    <h1 id='log-title'></h1>
+    <table id='workouts-table'>
+      <thead>
+        <tr id='top-row'>
+          <th id='just-date'>Date</th>
+        </tr>
+      </thead>
+      <tbody id='table-body'></tbody>
+    </table>
+    <button id='finish'>Finished</button>
   </body>
 </html>
