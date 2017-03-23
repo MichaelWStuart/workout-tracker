@@ -47,11 +47,11 @@ window.onload = () => {
   const appendData = muscle => {
     muscleName.innerHTML = muscle;
     JSON.parse(lookUp[muscle]).results.forEach(exercise => {
-      if(exercise.description.length > 1) {
-        const node = document.createElement('li');
-        node.innerHTML = exerciseListItemTemplate(exercise);
-        exerciseList.appendChild(node);
-      }
+
+      const node = document.createElement('li');
+      node.innerHTML = exerciseListItemTemplate(exercise);
+      exerciseList.appendChild(node);
+
     });
   }
 

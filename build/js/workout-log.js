@@ -1,169 +1,138 @@
 window.onload = () => {
 
-  if(!window.localStorage.getItem('_workout_plan')) {
-    window.location.replace('dashboard.html')
-  }
+  const today = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date().getDay()];
+  const priorWorkouts = window.localStorage.getItem('_workout_log');
+  const workoutPlan = verifyWorkoutPlan();
+  let parsedPriors;
 
-  let priorWorkouts;
-
-  if(!window.localStorage.getItem('_workout_log')) {
-    priorWorkouts = false;
-  } else {
-    priorWorkouts = JSON.parse(window.localStorage.getItem('_workout_log'));
-  }
-
-  const workoutPlan = JSON.parse(window.localStorage.getItem('_workout_plan'));
-  const currentDate = new Date;
-
-  const timestamp = Date.parse(currentDate);
-  const exerciseKeys = [];
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-
-  (() => {
-    if(workoutPlan[days[currentDate.getDay()]].length === 0) {
-      window.location.replace('dashboard.html');
+  function verifyWorkoutPlan() {
+    let plan = window.localStorage.getItem('_workout_plan');
+    if(plan) {
+      plan = JSON.parse(plan);
+      if(plan[today].length) {
+        return plan[today];
+      }
     }
-  })()
-
-  const tableBody = document.getElementById('table-body');
-  const topRow = document.getElementById('top-row')
-
-  const state = {
-    [timestamp]:{ exercises: [] }
-  };
-
-  const setState = exercise => {
-    state[timestamp].exercises.push({[exercise.name]: []})
-    exerciseKeys.push(exercise.name);
+    window.location.replace('dashboard.html');
   }
 
-  const formatDate = (date) => {
-    const month = months[date.getMonth()];
-    const day = date.getDate();
-    const year = date.getFullYear();
-    return `${month} ${day}, ${year}`;
+  const getKeys = arr => arr.reduce((acc,val) => acc.concat(Object.keys(val)[0]),[]);
+
+  const appendPageTitle = () => {
+    document.getElementById('page-title').innerHTML = `Workout plan for ${today}`;
   }
 
-  const appendTitle = exercise => {
-    const node = document.createElement('th');
-    node.className = 'exercise-name';
-    node.innerHTML = `${exercise.name}`;
-    topRow.appendChild(node);
-  }
-
-  const appendInputsRow = index => {
-    const inputsRow = document.getElementById('inputs-row');
-    const node = document.createElement('td');
-    node.className = 'workout-input';
-    node.id = `td-${index}`;
-    inputsRow.appendChild(node);
-  }
-
-  const buildInputTds = (index, nodes) => {
-    const td = document.getElementById(`td-${index}`);
-    const slash1 = document.createTextNode('/');
-    const slash2 = document.createTextNode('/');
-    td.appendChild(nodes[0]);
-    td.appendChild(slash1);
-    td.appendChild(nodes[1]);
-    td.appendChild(slash2);
-    td.appendChild(nodes[2]);
-  }
-
-  const appendInputs = index => {
-    const nodes = [];
-    for(let i = 0; i < 3; i++) {
-      const node = document.createElement('input');
-      node.className = 'reps';
-      node.id = `rep-${index}-${i}`
-      nodes.push(node);
-    }
-    buildInputTds(index, nodes)
-  }
-
-  const appendPriorWorkoutData = (workout, index, timestampKeys, exerciseKeys) => {
-    workout[timestampKeys[index]].exercises.forEach((exercise, i) => {
-      const target = document.getElementById(timestampKeys[index]);
-      const node = document.createElement('td');
-      node.id = `${timestampKeys[index]}-${exerciseKeys[i]}`
-      target.appendChild(node)
-      exercise[exerciseKeys[i]].forEach((set, j) => {
-        const targetNode = document.getElementById(`${timestampKeys[index]}-${exerciseKeys[i]}`);
-        if(j) {
-          const slash = document.createTextNode(' / ');
-          targetNode.appendChild(slash);
-        }
-        if(!set) {
-          set = 0;
-        }
-        const setNode = document.createTextNode(set);
-        targetNode.appendChild(setNode);
-      });
+  const appendWorkoutTitles = () => {
+    const topRow = document.getElementById('top-row');
+    workoutPlan.forEach(exercise => {
+      const title = document.createElement('th');
+      title.innerHTML = `${exercise.name}`;
+      topRow.appendChild(title);
     });
   }
 
+  const createDateCell = UTCdate => {
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const date = new Date(Number(UTCdate));
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+    const dateCell = document.createElement('td');
+    dateCell.innerHTML = `${month} ${day}, ${year}`;
+    return dateCell;
+  }
+
+  const appendTheWorkout = (prior, timestamp) => {
+    const exerciseNames = getKeys(prior);
+    const row = document.createElement('tr');
+    document.getElementById('table-body').appendChild(row);
+    row.appendChild(createDateCell(timestamp));
+    prior.forEach((exercise, i) => {
+      const name = exerciseNames[i];
+      const set = exercise[name];
+      const exerciseCell = document.createElement('td');
+      row.appendChild(exerciseCell)
+      set.forEach((reps, j) => {
+        if(j) exerciseCell.appendChild(document.createTextNode(' / '));
+        if(!reps) reps = 0;
+        exerciseCell.appendChild(document.createTextNode(reps));
+      })
+    })
+  }
+
+  const workoutsAreSimilar = prior => {
+    for(let i = 0; i < workoutPlan.length; i++) {
+      if(!prior[i].hasOwnProperty(workoutPlan[i].name)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   const appendPriorWorkouts = () => {
-    const timestampKeys = [];
-    const workoutKeys = [];
-    priorWorkouts.forEach(obj => timestampKeys.push(Object.keys(obj)[0]));
-    priorWorkouts[0][timestampKeys[0]].exercises.forEach(obj => exerciseKeys.push(Object.keys(obj)[0]));
-    priorWorkouts.forEach((workout, index) => {
-      if(currentDate.getDay() === (new Date(Number(timestampKeys[index]))).getDay()) {
-        let node = document.createElement('tr');
-        node.id = `${timestampKeys[index]}`
-        tableBody.append(node);
-        node = document.createElement('td');
-        document.getElementById(`${timestampKeys[index]}`).appendChild(node);
-        node.innerHTML = formatDate(new Date(Number(timestampKeys[index])));
-        appendPriorWorkoutData(workout, index, timestampKeys, exerciseKeys)
+    if(priorWorkouts) {
+      parsedPriors = JSON.parse(priorWorkouts);
+      const timestamps = getKeys(parsedPriors);
+      timestamps.forEach((timestamp, index) => {
+        const prior = parsedPriors[index][timestamp].exercises;
+        if(workoutsAreSimilar(prior)) {
+          appendTheWorkout(prior, timestamp);
+        }
+      })
+    }
+  }
+
+  const appendInputsRow = () => {
+    const UTCdate = Date.parse(new Date());
+    const row = document.createElement('tr');
+    document.getElementById('table-body').appendChild(row);
+    row.id = 'inputs-row';
+    row.appendChild(createDateCell(UTCdate));
+    workoutPlan.forEach((exercise, set) => {
+      const inputCell = document.createElement('td');
+      inputCell.id = `${exercise.name}-${set}`;
+      inputCell.className = 'workout-input';
+      row.appendChild(inputCell);
+      for(let rep = 0; rep < 3; rep++) {
+        const repInput = document.createElement('input');
+        repInput.id = `${set}-${rep}`;
+        repInput.className = 'reps';
+        if(rep) inputCell.appendChild(document.createTextNode('/'));
+        inputCell.appendChild(repInput);
       }
     });
   }
 
-  (() => {
-    let node;
-    if(priorWorkouts) {
-      appendPriorWorkouts();
-    }
-    node = document.createElement('tr');
-    node.id = 'inputs-row';
-    tableBody.appendChild(node);
-    node = document.createElement('td');
-    node.id = 'current-date';
-    document.getElementById('inputs-row').appendChild(node);
-    node.innerHTML = formatDate(currentDate);
-  })()
-
-  workoutPlan[days[currentDate.getDay()]].forEach((exercise,index) => {
-    setState(exercise);
-    appendTitle(exercise);
-    appendInputsRow(index);
-    appendInputs(index);
-  });
-
-  document.getElementById('page-title').innerHTML = `Workout Plan For ${days[currentDate.getDay()]}`;
-
   const storeInputData = () => {
-    document.querySelectorAll('.reps').forEach(item => {
-      const set = item.id.slice(4,5);
-      const rep = item.id.slice(6);
-      state[timestamp].exercises[set][exerciseKeys[set]][rep] = item.value;
+    const inputData = [];
+    document.querySelectorAll('.workout-input').forEach(inputElement => {
+      const setData = [];
+      const id = inputElement.id;
+      const name = id.slice(0, id.lastIndexOf('-'));
+      const setList = inputElement.children;
+      for(let set = 0; set < setList.length; set++) {
+        setData.push(setList[set].value);
+      }
+      inputData.push({[name]:setData});
+    });
+    return inputData;
+  }
+
+  const assignAndStore = () => {
+    document.getElementById('0-0').setAttribute('autofocus','true');
+    document.getElementById('finish').addEventListener('click', () => {
+      const inputData = {[Date.parse(new Date())]:{exercises: storeInputData()}};
+      window.localStorage.setItem('_workout_log', JSON.stringify((parsedPriors || []).concat(inputData)));
+      window.location.replace('dashboard.html');
     });
   }
 
-  document.getElementById('rep-0-0').setAttribute('autofocus','true');
-
-  document.getElementById('finish').addEventListener('click', () => {
-    storeInputData();
-    if(priorWorkouts) {
-      priorWorkouts.push(state);
-    } else {
-      priorWorkouts = [];
-      priorWorkouts.push(state);
-    }
-    window.localStorage.setItem('_workout_log', JSON.stringify(priorWorkouts));
-    window.location.replace('dashboard.html');
-  });
+  (() => {
+    appendPageTitle();
+    appendWorkoutTitles();
+    appendPriorWorkouts();
+    appendInputsRow();
+    assignAndStore();
+  })();
 
 }
