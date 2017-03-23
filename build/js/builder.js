@@ -26,6 +26,14 @@ window.onload = () => {
     <button class='add-exercise'>Add</button>
   `;
 
+  // <select class='drop-down'>
+  //   <option value='1'>1</option>
+  //   <option value='2'>2</option>
+  //   <option value='3' selected>3</option>
+  //   <option value='4'>4</option>
+  //   <option value='5'>5</option>
+  // </select>
+
   const workoutListItemTemplate = exercise => `
     <h3>${exercise.name}</h3>
     <button id='${exercise.name}${state.exercises[state.day].length}'>Remove</button>
@@ -47,7 +55,6 @@ window.onload = () => {
   const appendData = muscle => {
     muscleName.innerHTML = muscle;
     JSON.parse(lookUp[muscle]).results.forEach(exercise => {
-
       const node = document.createElement('li');
       node.innerHTML = exerciseListItemTemplate(exercise);
       exerciseList.appendChild(node);

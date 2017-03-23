@@ -152,12 +152,12 @@ html, body {
   margin-top: 15px;
 }
 
-svg g[id] path {
+svg g path {
   opacity: .2;
   transition: opacity .25s ease-in-out;
 }
 
-svg g g[id]:hover path {
+svg g g:hover path {
   cursor: pointer;
   opacity: .5;
   fill: #00BCD4 !important;
@@ -165,6 +165,10 @@ svg g g[id]:hover path {
 
 .active-day {
   color: #00BCD4
+}
+
+.drop-down {
+  font-family: 'Jura', sans-serif;
 }
 
 button {

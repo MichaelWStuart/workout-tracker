@@ -51,13 +51,13 @@ window.onload = () => {
       const name = exerciseNames[i];
       const set = exercise[name];
       const exerciseCell = document.createElement('td');
-      row.appendChild(exerciseCell)
+      row.appendChild(exerciseCell);
       set.forEach((reps, j) => {
         if(j) exerciseCell.appendChild(document.createTextNode(' / '));
         if(!reps) reps = 0;
         exerciseCell.appendChild(document.createTextNode(reps));
-      })
-    })
+      });
+    });
   }
 
   const workoutsAreSimilar = prior => {
@@ -78,7 +78,7 @@ window.onload = () => {
         if(workoutsAreSimilar(prior)) {
           appendTheWorkout(prior, timestamp);
         }
-      })
+      });
     }
   }
 
