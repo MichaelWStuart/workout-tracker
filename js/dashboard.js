@@ -1,16 +1,29 @@
+const workoutLogData = verifyWorkoutLog();
+
+function verifyWorkoutLog() {
+  const log = window.localStorage.getItem('_workout_log');
+  return (log ? JSON.parse(log) : null);
+}
+
+const getKeys = arr => arr.reduce((acc,val) => acc.concat(Object.keys(val)[0]),[]);
+
 window.onload = () => {
 
-
-
-  const plan = JSON.parse(window.localStorage.getItem('_workout_plan'));
-  const twentyFourHours = 1000 * 60 * 60 * 24;
-  const currentUTC = Date.parse(new Date);
-  const days = Object.keys(plan);
-  const NUMBER_OF_WEEKS = 1;
-  const log = [];
+  (() => {
+    if(workoutLogData) {
+      createBar(workoutLogData);
+      createPie(workoutLogData);
+    }
+  })()
 
   const generateLog = () => {
-    let j = 1
+    const plan = JSON.parse(window.localStorage.getItem('_workout_plan'));
+    const twentyFourHours = 1000 * 60 * 60 * 24;
+    const currentUTC = Date.parse(new Date);
+    const days = Object.keys(plan);
+    const NUMBER_OF_WEEKS = 12;
+    const log = [];
+    let j = 1;
     for (let i = 1; i <= (NUMBER_OF_WEEKS * 7); i++) {
       const date = currentUTC - (twentyFourHours * i);
       const day = days[new Date(date).getDay()]
@@ -25,7 +38,7 @@ window.onload = () => {
         log.push(workout)
         j++;
       }
-    }    
+    }
     window.localStorage.setItem('_workout_log', JSON.stringify(log.reverse()));
     alert('Workout Log Created')
   }
@@ -33,8 +46,6 @@ window.onload = () => {
   document.getElementById('generate').addEventListener('click', () => {
     generateLog();
   })
-
-
 
   let alerted;
 
