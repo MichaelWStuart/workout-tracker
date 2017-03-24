@@ -3,7 +3,8 @@ const createPie = pieData => {
   const pieMargin = {top: 70, right: 100, bottom: 10, left: 10},
     pieWidth = 300,
     pieHeight = 250,
-    radius = Math.min(pieWidth, pieHeight) / 2;
+    radius = Math.min(pieWidth, pieHeight) / 2,
+    color = d3.scaleOrdinal(d3.schemeCategory20);
 
   const pieSvg = d3.select('#pie')
     .attr('width', pieWidth + pieMargin.left + pieMargin.right)
@@ -11,8 +12,6 @@ const createPie = pieData => {
 
   const g = pieSvg.append('g')
     .attr('transform', `translate(${pieWidth / 2},${pieHeight / 2 + pieMargin.top})`);
-
-  const color = d3.scaleOrdinal(d3.schemeCategory20);
 
   const pie = d3.pie()
     .sort(null)

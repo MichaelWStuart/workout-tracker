@@ -22,7 +22,7 @@ const formatLineData = (workoutPlan, workoutLog, logKeys) => {
       workout[logKeys[i]].exercises.forEach((exercise,j) => {
         const name = Object.keys(exercise)[0]
         if(name === exerciseName) {
-          list.push([logKeys[i], exercise[name][0]])
+          list.push([new Date(Number(logKeys[i])), exercise[name][0]])
         }
       });
     });
@@ -93,7 +93,7 @@ const generateLog = () => {
   const twentyFourHours = 1000 * 60 * 60 * 24;
   const currentUTC = Date.parse(new Date);
   const days = Object.keys(plan);
-  const NUMBER_OF_WEEKS = 1;
+  const NUMBER_OF_WEEKS = 8;
   const log = [];
   let j = 1;
   for (let i = 1; i <= (NUMBER_OF_WEEKS * 7); i++) {
@@ -123,9 +123,8 @@ const handleNewClick = () => {
   }
 }
 
-const handleBarHover = (target, lineData, workoutNames) => {
-  const index = workoutNames.indexOf(target);
-  renderLine(lineData[index]);
+const handleBarHover = target => {
+  console.log(target)
 }
 
 const addButtonListeners = () => {
@@ -133,9 +132,9 @@ const addButtonListeners = () => {
   document.getElementById('new').addEventListener('click', handleNewClick);
 };
 
-const addBarListener = (lineData, workoutNames) => {
+const addBarListener = () => {
   document.querySelectorAll('.bar').forEach(bar => {
-    bar.addEventListener('mouseover', e => handleBarHover(e.path[0].id, lineData, workoutNames));
+    bar.addEventListener('mouseover', e => handleBarHover(e.path[0].id));
   });
 }
 
@@ -148,7 +147,8 @@ window.onload = () => {
     const [lineData, workoutNames] = formatLineData(workoutPlan, workoutLog, logKeys);
     createPie(format(convertPieData(workoutPlan, workoutLog, logKeys)));
     createBar(format(convertBarData(workoutLog, logKeys)));
-    addBarListener(lineData, workoutNames);
+    createLine(lineData, workoutNames);
+    addBarListener();
   };
 
   addButtonListeners();
