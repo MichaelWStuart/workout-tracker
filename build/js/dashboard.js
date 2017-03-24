@@ -1,8 +1,14 @@
 const workoutLogData = verifyWorkoutLog();
+const workoutPlanData = verifyWorkoutPlan();
 
 function verifyWorkoutLog() {
   const log = window.localStorage.getItem('_workout_log');
   return (log ? JSON.parse(log) : null);
+}
+
+function verifyWorkoutPlan() {
+  const plan = window.localStorage.getItem('_workout_plan');
+  return (plan ? JSON.parse(plan) : null);
 }
 
 const getKeys = arr => arr.reduce((acc,val) => acc.concat(Object.keys(val)[0]),[]);
@@ -12,7 +18,7 @@ window.onload = () => {
   (() => {
     if(workoutLogData) {
       createBar(workoutLogData);
-      createPie(workoutLogData);
+      createPie(workoutLogData, workoutPlanData);
     }
   })()
 
@@ -21,7 +27,7 @@ window.onload = () => {
     const twentyFourHours = 1000 * 60 * 60 * 24;
     const currentUTC = Date.parse(new Date);
     const days = Object.keys(plan);
-    const NUMBER_OF_WEEKS = 12;
+    const NUMBER_OF_WEEKS = 1;
     const log = [];
     let j = 1;
     for (let i = 1; i <= (NUMBER_OF_WEEKS * 7); i++) {

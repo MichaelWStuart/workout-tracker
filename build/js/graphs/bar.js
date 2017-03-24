@@ -1,7 +1,7 @@
 function createBar(workoutData) {
 
   const barData = formatBarData(workoutData),
-    barMargin = {top: 10,right: 10,bottom: 200,left: 60},
+    barMargin = {top: 10, right: 10, bottom: 200, left: 60},
     barWidth = 300,
     barHeight = 250;
 
