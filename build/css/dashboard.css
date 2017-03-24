@@ -1,3 +1,8 @@
 .bar {
-  fill: steelblue;
+  fill: rgb(114, 9, 9);
+  cursor: pointer;
+}
+
+.bar:hover {
+  fill: rgb(229, 22, 22)
 }

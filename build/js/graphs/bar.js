@@ -1,7 +1,6 @@
-function createBar(workoutData) {
+const createBar = barData => {
 
-  const barData = formatBarData(workoutData),
-    barMargin = {top: 10, right: 10, bottom: 200, left: 60},
+  const barMargin = {top: 10, right: 10, bottom: 200, left: 60},
     barWidth = 300,
     barHeight = 250;
 
@@ -25,6 +24,7 @@ function createBar(workoutData) {
     .data(barData)
     .enter().append('rect')
     .attr('class', 'bar')
+    .attr('id', d => d[0])
     .attr('x', d => x(d[0]))
     .attr('width', x.bandwidth())
     .attr('y', d => y(d[1]))
@@ -47,45 +47,4 @@ function createBar(workoutData) {
     .attr('dx', '-10.5em')
     .attr('dy', '-2.5em')
     .text('Sets Completed');
-
-  function formatBarData(unformattedData) {
-
-    const convert = (data) => {
-      const keys = getKeys(data);
-      return data.map((workout, i) => {
-        return workout[keys[i]].exercises.reduce((acc, exercise) => {
-          return acc.concat(Object.keys(exercise)[0]);
-        },[]);
-      });
-    }
-
-    const flatten = arr => {
-      return arr.reduce((acc, val) => {
-        return acc.concat(Array.isArray(val) ? flatten(val) : val);
-      },[]);
-    }
-
-    const isFound = (value, arr) => {
-      for(let i = 0; i < arr.length; i++) {
-        if(value === arr[i][0]) return i;
-      }
-      return -1;
-    }
-
-    const format = arr => {
-      const list = [[0,0]];
-      arr.forEach(name => {
-        const index = isFound(name, list);
-        if (index === -1) {
-          list.push([name, 1]);
-        } else {
-          list[index][1]++;
-        }
-      });
-      list.shift();
-      return list;
-    }
-
-    return format(flatten(convert(unformattedData)));
-  }
 }
