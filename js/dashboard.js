@@ -1,3 +1,5 @@
+// TODO: refactor all the data converting functions
+
 const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const MUSCLES = ['','Biceps','Deltoids','Chest','Pecs','Triceps','Abs','Calves','Glutes','Traps','Quads','Hamstrings','Lats','Biceps','Obliques','Calves'];
 
@@ -63,31 +65,17 @@ const convertBarData = (workoutLog, logKeys) => {
   return list;
 }
 
-const isFound = (value, arr) => {
-  for(let i = 0; i < arr.length; i++) {
-    if(value === arr[i][0]) {
-      return i;
-    }
-  }
-  return -1;
-}
-
-// TODO: use filter instead of this inefficient garbage
-
-const format = arr => {
-  const list = [[0,0]];
-  arr.forEach(name => {
-    const index = isFound(name, list);
-    if (index === -1) {
-      list.push([name, 1]);
-    } else {
-      list[index][1]++;
-    }
+const format = (data, names) => {
+  const list = []
+  names = Array.from(new Set(names));
+  names.forEach(exercise => {
+    const filtered = data.filter(val => val === exercise);
+    if(filtered.length > 0) list.push([exercise, filtered.length]);
   });
-  list.shift();
-  return list;
+  return list
 }
 
+//all of this because Atom can't handle long single lines...
 const generatePlan = () => {
   const biceJSON = JSON.parse(biceps);
     pecsJSON = JSON.parse(pectorals);
@@ -97,22 +85,24 @@ const generatePlan = () => {
     tricJSON = JSON.parse(triceps);
     quadJSON = JSON.parse(quads);
     hamsJSON = JSON.parse(hamstrings);
+    calvJSON = JSON.parse(calves);
+    obliJSON = JSON.parse(obliques);
     plan = {};
 
-  plan.Sunday = [];
+      console.log(obliJSON)
+
+  plan.Sunday = [quadJSON.results[15],hamsJSON.results[7],calvJSON.results[6]];
   plan.Monday = [pecsJSON.results[11],pecsJSON.results[15],pecsJSON.results[13],deltJSON.results[10]];
   plan.Tuesday = [latsJSON.results[11],trapJSON.results[11],biceJSON.results[1],biceJSON.results[7]];
-  plan.Wednesday = [quadJSON.results[15],hamsJSON.results[7]]
-  plan.Thursday = [pecsJSON.results[11],pecsJSON.results[15],pecsJSON.results[13],tricJSON.results[8]];
+  plan.Wednesday = [quadJSON.results[15],hamsJSON.results[7],obliJSON.results[5]]
+  plan.Thursday = [pecsJSON.results[11],pecsJSON.results[15],tricJSON.results[5],tricJSON.results[8]];
   plan.Friday = [latsJSON.results[11],trapJSON.results[11],biceJSON.results[1],biceJSON.results[7]];
-  plan.Saturday = [];
+  plan.Saturday = [pecsJSON.results[11],pecsJSON.results[15],pecsJSON.results[13],deltJSON.results[10]];
   window.localStorage.setItem('_workout_plan', JSON.stringify(plan));
-  console.log(plan)
   return plan;
 }
 
 const generateLog = plan => {
-  // const plan = JSON.parse(window.localStorage.getItem('_workout_plan'));
   const twentyFourHours = 1000 * 60 * 60 * 24;
   const currentUTC = Date.parse(new Date);
   const days = Object.keys(plan);
@@ -196,8 +186,8 @@ window.onload = () => {
   if(workoutLog && workoutPlan) {
     const logKeys = workoutLog.reduce((acc,val) => acc.concat(Object.keys(val)[0]),[]);
     const [lineData, workoutNames] = formatLineData(workoutPlan, workoutLog, logKeys);
-    createPie(format(convertPieData(workoutPlan, workoutLog, logKeys)));
-    createBar(format(convertBarData(workoutLog, logKeys)));
+    createPie(format(convertPieData(workoutPlan, workoutLog, logKeys), MUSCLES));
+    createBar(format(convertBarData(workoutLog, logKeys), workoutNames));
     createLine(lineData, workoutNames);
     addBarListener(workoutNames);
     addLineListener();

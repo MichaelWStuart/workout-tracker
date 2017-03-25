@@ -1,9 +1,9 @@
 const createBar = barData => {
 
-  const barMargin = {top: 10, right: 10, bottom: 200, left: 60},
-    barWidth = 300,
-    barHeight = 160,
-    color = d3.scaleOrdinal(d3.schemeCategory20b);
+  const barMargin = {top: 10, right: 10, bottom: 250, left: 60},
+    barWidth = 500,
+    barHeight = 200,
+    color = d3.scaleOrdinal(d3.schemeCategory20c);
 
   const bar = d3.select('#bar')
     .attr('width', barWidth + barMargin.left + barMargin.right)

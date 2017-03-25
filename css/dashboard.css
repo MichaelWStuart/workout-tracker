@@ -1,99 +1,120 @@
+/*TODO: make responsive*/
+
 html, body {
-  margin: 0;
-  font-family: 'Jura', sans-serif;
   background-color: #EEE;
+  font-family: 'Jura', sans-serif;
+  margin: 0;
 }
 
-#bar {
-  width: 400;
-}
-
-.bar {
-  cursor: pointer;
-}
-
-.visible {
-  visibility: visible;
-}
-
-.hidden {
-  visibility: hidden;
-}
-
-#left-side {
-  float: left
-}
-
-#right-side {
-  float: right;
+#tooltip {
+  background-color: rgba(187,187,187, 0.7);
+  border-radius: 5px;
+  height: 17px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
 }
 
 #head-box {
+  margin-bottom: 20px;
   width: 100%;
 }
 
-#button-box {
-  padding-top: 10px;
-  height: 30px;
+#head-box #button-box {
   background: #222;
+  height: 40px;
+  padding-top: 10px;
   width: 100%;
 }
 
-#bar-caption {
-  font-size: 13px;
+#head-box #button-box #new {
+  left: 40px;
+  position: relative;
 }
 
-#generate {
+#head-box #button-box #log {
+  left: 70px;
+  position: relative;
+}
+
+#head-box #button-box #generate {
   float: right;
-  margin-right: 40px;
+  margin-right: 30px;
 }
 
-.pie-keys {
+#head-box #button-box button {
+  background: #222;
+  border: none;
+  color: #EEE;
+  font-family: 'Jura', sans-serif;
+  font-size: 23px;
+}
+
+#head-box #button-box button:hover {
+  color: #FFF;
+  cursor: pointer;
+  text-shadow: 0 0 4px #FFF;
+}
+
+#head-box #gradient-box {
+  background: linear-gradient(0deg, #EEE, #222);
+  height: 12px;
+}
+
+#body-box {
+  margin: auto;
+  width: 1350px;
+}
+
+#body-box #left-box {
+  float: left;
+}
+
+#body-box #left-box #pie-box #pie #pie-title {
+  font-size: 15px;
+}
+
+#body-box #left-box #pie-box #pie .pie-keys {
   font-size: 11px;
 }
 
-.bar-muscles {
-  font-family: 'Jura', sans-serif;
-  font-size: 12px;
+#body-box #left-box #pie-box #pie .arc:hover {
+  cursor: pointer;
+  opacity: 0.9;
 }
 
-#pie-title {
+#body-box #left-box #bar-box #bar #bar-caption {
+  font-size: 15px;
+}
+
+#body-box #left-box #bar-box #bar .bar {
+  cursor: pointer;
+}
+
+#body-box #left-box #bar-box #bar .bar:hover {
+  opacity: 0.7;
+}
+
+#body-box #right-box {
+  float: right;
+}
+
+#body-box #right-box #line-box #line #line-caption {
+  font-family: 'Jura', sans-serif;
   font-size: 13px;
 }
 
-#gradient-box {
-  height: 10px;
-  background: linear-gradient(0deg, #EEE, #222);
+
+#body-box #right-box #line-box #line .visible {
+  visibility: visible;
 }
 
-#line-caption {
+#body-box #right-box #line-box #line .hidden {
+  visibility: hidden;
+}
+
+#body-box .tick {
   font-family: 'Jura', sans-serif;
-}
-
-.tick {
-  font-family: 'Jura', sans-serif;
-}
-
-#new {
-  position: relative;
-  left: 40px;
-}
-
-#log {
-  position: relative;
-  left: 70px;
-}
-
-button {
-  border: none;
-  background: #222;
-  color: #EEE;
-  font-size: 18px;
-  font-family: 'Jura', sans-serif;
-}
-
-button:hover {
-  color: #FFF;
-  text-shadow: 0 0 4px #FFF;
-  cursor: pointer;
+  font-size: 13px;
 }
