@@ -70,7 +70,7 @@ const format = (data, names) => {
   names = Array.from(new Set(names));
   names.forEach(exercise => {
     const filtered = data.filter(val => val === exercise);
-    if(filtered.length > 0) list.push([exercise, filtered.length]);
+    if(filtered.length > 0) list.push([exercise, filtered.length * 3]);
   });
   return list
 }
