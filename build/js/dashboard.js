@@ -88,8 +88,31 @@ const format = arr => {
   return list;
 }
 
-const generateLog = () => {
-  const plan = JSON.parse(window.localStorage.getItem('_workout_plan'));
+const generatePlan = () => {
+  const biceJSON = JSON.parse(biceps);
+    pecsJSON = JSON.parse(pectorals);
+    deltJSON = JSON.parse(deltoids);
+    trapJSON = JSON.parse(traps);
+    latsJSON = JSON.parse(lats);
+    tricJSON = JSON.parse(triceps);
+    quadJSON = JSON.parse(quads);
+    hamsJSON = JSON.parse(hamstrings);
+    plan = {};
+
+  plan.Sunday = [];
+  plan.Monday = [pecsJSON.results[11],pecsJSON.results[15],pecsJSON.results[13],deltJSON.results[10]];
+  plan.Tuesday = [latsJSON.results[11],trapJSON.results[11],biceJSON.results[1],biceJSON.results[7]];
+  plan.Wednesday = [quadJSON.results[15],hamsJSON.results[7]]
+  plan.Thursday = [pecsJSON.results[11],pecsJSON.results[15],pecsJSON.results[13],tricJSON.results[8]];
+  plan.Friday = [latsJSON.results[11],trapJSON.results[11],biceJSON.results[1],biceJSON.results[7]];
+  plan.Saturday = [];
+  window.localStorage.setItem('_workout_plan', JSON.stringify(plan));
+  console.log(plan)
+  return plan;
+}
+
+const generateLog = plan => {
+  // const plan = JSON.parse(window.localStorage.getItem('_workout_plan'));
   const twentyFourHours = 1000 * 60 * 60 * 24;
   const currentUTC = Date.parse(new Date);
   const days = Object.keys(plan);
@@ -112,30 +135,58 @@ const generateLog = () => {
     }
   }
   window.localStorage.setItem('_workout_log', JSON.stringify(log.reverse()));
-  alert('Workout Log Created')
+}
+
+const handleGenerateClick = () => {
+  if (window.confirm('Generating sample data will overwrite existing data.')) {
+    generateLog(generatePlan());
+    window.location.replace('dashboard.html');
+  }
 }
 
 const handleNewClick = () => {
   if (window.confirm('Creating a new log will erase all data.')) {
-    // window.localStorage.setItem('_workout_plan', '');
-    // window.localStorage.setItem('_workout_log', '');
+    window.localStorage.setItem('_workout_plan', '');
+    window.localStorage.setItem('_workout_log', '');
     window.location.replace('builder.html');
   }
 }
 
-const handleBarHover = target => {
-  console.log(target)
+const handleLogClick = () => {
+  window.location.replace('workout-log.html');
+}
+
+const handleBarHover = (target, workoutNames) => {
+  const filtered = workoutNames.filter(i => i !== target)
+  const element = document.getElementById(`line-${target}`)
+  element.classList.remove('hidden');
+  element.classList.add('visible');
+  filtered.forEach(name => {
+    const path = document.getElementById(`line-${name}`)
+    path.classList.remove('visible');
+    path.classList.add('hidden');
+  })
 }
 
 const addButtonListeners = () => {
-  document.getElementById('generate').addEventListener('click', generateLog);
+  document.getElementById('generate').addEventListener('click', handleGenerateClick);
   document.getElementById('new').addEventListener('click', handleNewClick);
+  document.getElementById('log').addEventListener('click', handleLogClick);
 };
 
-const addBarListener = () => {
+const addBarListener = (workoutNames) => {
   document.querySelectorAll('.bar').forEach(bar => {
-    bar.addEventListener('mouseover', e => handleBarHover(e.path[0].id));
+    bar.addEventListener('mouseover', e => handleBarHover(e.path[0].id, workoutNames));
   });
+}
+
+const addLineListener = () => {
+  document.getElementById('bar').addEventListener('mouseout', () => {
+    document.querySelectorAll('.workout-line').forEach(element => {
+      element.classList.remove('hidden');
+      element.classList.add('visible');
+    });
+  })
 }
 
 window.onload = () => {
@@ -148,7 +199,8 @@ window.onload = () => {
     createPie(format(convertPieData(workoutPlan, workoutLog, logKeys)));
     createBar(format(convertBarData(workoutLog, logKeys)));
     createLine(lineData, workoutNames);
-    addBarListener();
+    addBarListener(workoutNames);
+    addLineListener();
   };
 
   addButtonListeners();

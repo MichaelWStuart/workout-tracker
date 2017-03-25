@@ -2,7 +2,8 @@ const createBar = barData => {
 
   const barMargin = {top: 10, right: 10, bottom: 200, left: 60},
     barWidth = 300,
-    barHeight = 250;
+    barHeight = 160,
+    color = d3.scaleOrdinal(d3.schemeCategory20b);
 
   const bar = d3.select('#bar')
     .attr('width', barWidth + barMargin.left + barMargin.right)
@@ -12,7 +13,6 @@ const createBar = barData => {
 
   const x = d3.scaleBand()
     .range([0, barWidth])
-    .padding(0.1);
 
   const y = d3.scaleLinear()
     .range([barHeight, 0]);
@@ -24,6 +24,7 @@ const createBar = barData => {
     .data(barData)
     .enter().append('rect')
     .attr('class', 'bar')
+    .attr('fill', (d, i) => color(i))
     .attr('id', d => d[0])
     .attr('x', d => x(d[0]))
     .attr('width', x.bandwidth())
@@ -37,7 +38,8 @@ const createBar = barData => {
     .style('text-anchor', 'end')
     .attr('dx', '-1em')
     .attr('dy', '-.5em')
-    .attr('transform', 'rotate(-90)');
+    .attr('transform', 'rotate(-90)')
+    .attr('class', 'bar-muscles');
 
   bar.append('g')
     .call(d3.axisLeft(y));
@@ -46,5 +48,6 @@ const createBar = barData => {
     .attr('transform', 'rotate(-90)')
     .attr('dx', '-10.5em')
     .attr('dy', '-2.5em')
-    .text('Sets Completed');
+    .text('Sets Completed')
+    .attr('id', 'bar-caption')
 }

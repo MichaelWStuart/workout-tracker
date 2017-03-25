@@ -1,8 +1,99 @@
+html, body {
+  margin: 0;
+  font-family: 'Jura', sans-serif;
+  background-color: #EEE;
+}
+
+#bar {
+  width: 400;
+}
+
 .bar {
-  fill: rgb(114, 9, 9);
   cursor: pointer;
 }
 
-.bar:hover {
-  fill: rgb(229, 22, 22)
+.visible {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+#left-side {
+  float: left
+}
+
+#right-side {
+  float: right;
+}
+
+#head-box {
+  width: 100%;
+}
+
+#button-box {
+  padding-top: 10px;
+  height: 30px;
+  background: #222;
+  width: 100%;
+}
+
+#bar-caption {
+  font-size: 13px;
+}
+
+#generate {
+  float: right;
+  margin-right: 40px;
+}
+
+.pie-keys {
+  font-size: 11px;
+}
+
+.bar-muscles {
+  font-family: 'Jura', sans-serif;
+  font-size: 12px;
+}
+
+#pie-title {
+  font-size: 13px;
+}
+
+#gradient-box {
+  height: 10px;
+  background: linear-gradient(0deg, #EEE, #222);
+}
+
+#line-caption {
+  font-family: 'Jura', sans-serif;
+}
+
+.tick {
+  font-family: 'Jura', sans-serif;
+}
+
+#new {
+  position: relative;
+  left: 40px;
+}
+
+#log {
+  position: relative;
+  left: 70px;
+}
+
+button {
+  border: none;
+  background: #222;
+  color: #EEE;
+  font-size: 18px;
+  font-family: 'Jura', sans-serif;
+}
+
+button:hover {
+  color: #FFF;
+  text-shadow: 0 0 4px #FFF;
+  cursor: pointer;
 }
