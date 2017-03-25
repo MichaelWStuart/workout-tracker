@@ -1,9 +1,11 @@
+//TODO: refactor min/max functions into recursive reducers
+
 const createLine = (data, workoutNames) => {
 
   const margin = {top: 15, right: 30, bottom: 20, left: 30},
-    width = 600,
-    height = 400,
-    color = d3.scaleOrdinal(d3.schemeCategory20b),
+    width = 700,
+    height = 438,
+    color = d3.scaleOrdinal(d3.schemeCategory20c),
     minReps = d3.min(data.reduce((acc,val) => acc.concat(d3.min(val, d => d[1])),[]));
     maxReps = d3.max(data.reduce((acc,val) => acc.concat(d3.max(val, d => d[1])),[]));
     minDate = d3.min(data.reduce((acc,val) => acc.concat(d3.min(val, d => d[0])),[]));
@@ -41,7 +43,7 @@ const createLine = (data, workoutNames) => {
     .attr('y', 8)
     .attr('dy', '0.71em')
     .attr('text-anchor', 'end')
-    .text('Number of reps completed in the first set')
+    .text('Number of first set reps')
     .attr('id','line-caption');
 
   data.forEach((_, index) => {

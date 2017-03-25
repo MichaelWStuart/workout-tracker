@@ -1,50 +1,51 @@
 html, body {
+  background-image: url('http://beinspirefitness.com/wp-content/uploads/2016/05/One-time-Consultation-Background.jpg');
+  background-size: cover;
+  color: #EEE;
+  font-family: 'Jura', sans-serif;
   height: 100%;
   margin: 0 auto;
-  text-align: center;
-  font-family: 'Jura', sans-serif;
-  color: #444;
-  background-color: #EEE;
-}
-
-#landing-box {
-  background: #EEE;
-}
-
-#landing-box #page-title{
   position: relative;
-  top: 3em;
-  z-index: 1;
-  background-color: #EEE;
-  width: 6.5em;
-  margin: auto;
+  text-align: center;
 }
 
 #body-box {
-  width: 60%;
+  background: #222;
+  border: 2px solid #BBB;
+  border-radius: 8px;
+  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.7);
   height: 50%;
+  left: 50%;
   margin: auto;
-  position: relative;
-  top: 5em;;
-  border: 1px solid black;
-  padding: 2em;
+  opacity: 0.85;
+  padding: 0 2vw;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  width: 50%;
 }
 
-#body-box #page-title {
-  position: relative;
-  bottom: 5em;
+#body-box #page-title{
+  font-size: 3.5vw;
+  margin: 1.8vw auto;
 }
 
 #body-box #landing-text {
-  margin: 0;
+  font-size: 1.3vw;
   text-align: justify;
 }
 
-#body-box #finish {
-  margin-top: 1em;
-  background-color: #DDD;
-  color: #444;
+#body-box #button-box #finish {
+  background: rgba(0, 0, 0, 0.0);
+  border: none;
+  color: #DDD;
   font-family: 'Jura', sans-serif;
-  position: relative;
-  top: .5em;
+  font-size: 1.8vw;
+  font-weight: bold;
+}
+
+#body-box #button-box #finish:hover {
+  color: #FFF;
+  cursor: pointer;
+  text-shadow: 0 0 2px #FFF;
 }

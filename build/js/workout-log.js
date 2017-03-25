@@ -1,3 +1,5 @@
+// TODO: refactor & verify input data
+
 window.onload = () => {
 
   const today = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date().getDay()];
