@@ -2,7 +2,9 @@
 <html>
   <head>
     <title>Dashboard</title>
+    <link href='https://fonts.googleapis.com/css?family=Jura' rel='stylesheet'>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.js"></script>
+    <script type='text/javascript' src='js/exercise-data.js'></script>
     <script type='text/javascript' src='js/dashboard.js'></script>
     <script type='text/javascript' src='js/graphs/bar.js'></script>
     <script type='text/javascript' src='js/graphs/line.js'></script>
@@ -10,28 +12,28 @@
     <link type='text/css' rel='stylesheet' href='css/dashboard.css'>
   </head>
   <body>
-    <div id='left-side'>
-      <div id='stats-box'>
-        <ul id='stats-list'></ul>
-        <div id='button-box'>
-          <button id='new'>Create New</button>
-          <a href='workout-log.html'>
-            <button>Workout Log</button>
-          </a>
-          <button id='generate'>Create a Test Log</button>
+    <header id='head-box'>
+      <div id='button-box'>
+        <button id='new'>Create New Workout</button>
+        <button id='log'>Workout Log</button>
+        <button id='generate'>Generate Sample Data</button>
+      </div>
+      <div id='gradient-box'></div>
+    </header>
+    <main>
+      <div id='left-side'>
+        <div id='pie-box'>
+          <svg id='pie'></svg>
+        </div>
+        <div id='bar-box'>
+          <svg id='bar'></svg>
         </div>
       </div>
-      <div id='pie-box'>
-        <svg id='pie'></svg>
+      <div id='right-side'>
+        <div id='line-box'>
+          <svg id='line'></svg>
+        </div>
       </div>
-    </div>
-    <div id='right-side'>
-      <div id='bar-box'>
-        <svg id='bar'></svg>
-      </div>
-      <div id='line-box'>
-        <svg id='line'></svg>
-      </div>
-    </div>
+    </main>
   </body>
 </html>

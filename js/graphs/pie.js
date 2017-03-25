@@ -1,8 +1,8 @@
 const createPie = pieData => {
 
-  const pieMargin = {top: 70, right: 100, bottom: 10, left: 10},
+  const pieMargin = {top: 10, right: 80, bottom: 10, left: 25},
     pieWidth = 300,
-    pieHeight = 250,
+    pieHeight = 220,
     radius = Math.min(pieWidth, pieHeight) / 2,
     color = d3.scaleOrdinal(d3.schemeCategory20);
 
@@ -11,7 +11,7 @@ const createPie = pieData => {
     .attr('height', pieHeight + pieMargin.top + pieMargin.bottom);
 
   const g = pieSvg.append('g')
-    .attr('transform', `translate(${pieWidth / 2},${pieHeight / 2 + pieMargin.top})`);
+    .attr('transform', `translate(${pieWidth / 2 + pieMargin.left},${pieHeight / 2 + pieMargin.top})`);
 
   const pie = d3.pie()
     .sort(null)
@@ -37,20 +37,21 @@ const createPie = pieData => {
     .data(pieData)
     .enter().append('g');
 
-  keyItem.append('rect')
-    .attr('x', pieWidth + pieMargin.left - 10)
-    .attr('y', (d, i) => pieMargin.top + (pieData.length * 5) + (i * 27))
-    .attr('width', 15)
-    .attr('height', 15)
+  keyItem.append('circle')
+    .attr('cx', pieWidth + pieMargin.left - 20)
+    .attr('cy', (d, i) => pieMargin.top + (pieData.length * 3.5) + (i * 20))
+    .attr('r', 5)
     .attr('fill', d => color(d[0]));
 
   keyItem.append('text')
-    .attr('x', pieWidth + pieMargin.left + 10)
-    .attr('y', (d, i) => pieMargin.top + (pieData.length * 6.9) + (i * 27))
-    .text(d => d[0]);
+    .attr('x', pieWidth + pieMargin.left - 8)
+    .attr('y', (d, i) => pieMargin.top + (pieData.length * 3.5) + 4 + (i * 20.1))
+    .text(d => d[0])
+    .attr('class','pie-keys');
 
   pieSvg.append('text')
-    .attr('transform', `translate(${(pieWidth - pieMargin.left)/2},${pieMargin.top - 20})`)
-    .attr('id', 'title')
+    .attr('transform', `translate(${(pieWidth - pieMargin.left - 170)/2},${pieMargin.top + 150}) rotate(-90)`)
+    .attr('id', 'pie-title')
     .text('Muscles Worked');
+
 }
